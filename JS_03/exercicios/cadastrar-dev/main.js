@@ -1,133 +1,123 @@
-//função para quebrar linha de código html
-
-function makeBreakLine(form) {
-  const breakLine = document.createElement("br");
-  return form.appendChild(breakLine);
+//função para criar uma label
+function createLabel(text, htmlFor) {
+  const label = document.createElement("label");
+  label.innerHTML = text;
+  label.htmlFor = htmlFor;
+  return label;
+}
+//função para criar um input
+function createInput(id, value, name, type = "text", placeholder = "") {
+  const input = document.createElement("input");
+  input.id = id;
+  input.value = value;
+  input.name = name;
+  input.type = type;
+  input.placeholder = placeholder;
+  return input;
 }
 
-// função para criar o formulário
-
-function createFormDev() {
-  //criando a tag main
-  const main = document.getElementById("mainId");
-  //criando o formulário
-  const devForm = document.createElement("form");
-  devForm.id = "devForm" + devForms.length;
-  devForms.push(devForm);
-  //adcionando o formulário no main
-  main.appendChild(devForm);
-
-  //primeira quebra de linha
-  makeBreakLine(devForm);
-
-  //campo para colocar a tecnologia
-  //label
-  const techLabel = document.createElement("label");
-  techLabel.textContent = "adicione o nome da tecnologia: ";
-  techLabel.id = "techLabelId";
-  techLabel.htmlFor = "techTextId";
-  //texto
-  const techText = document.createElement("input");
-  techText.type = "text";
-  techText.id = "techTextId";
-  //adcionar no formulário
-  devForm.appendChild(techLabel);
-  devForm.appendChild(techText);
-  makeBreakLine(devForm);
-  makeBreakLine(devForm);
-
-  //radio
-  // primeira opção
-
-  const radioLabel1 = document.createElement("label");
-  radioLabel1.textContent = "tempo de experiência:";
-
-  const radioInput1 = document.createElement("input");
-  radioInput1.name = "radio";
-  radioInput1.type = "radio";
-  radioInput1.id = "radio1";
-  radioInput1.value = "0-2 anos";
-
-  const radioLabelName1 = document.createElement("label");
-  radioLabelName1.htmlFor = "radio1";
-  radioLabelName1.textContent = "0-2 anos";
-
-  // segunda opção
-
-  const radioInput2 = document.createElement("input");
-  radioInput2.name = "radio";
-  radioInput2.type = "radio";
-  radioInput2.id = "radio2";
-  radioInput2.value = "3-4 anos";
-
-  const radioLabelName2 = document.createElement("label");
-  radioLabelName2.htmlFor = "radio2";
-  radioLabelName2.textContent = "3-4 anos";
-
-  // terceira opção
-
-  const radioInput3 = document.createElement("input");
-  radioInput3.name = "radio";
-  radioInput3.type = "radio";
-  radioInput3.id = "radio3";
-  radioInput3.value = "+ de 5 anos";
-
-  const radioLabelName3 = document.createElement("label");
-  radioLabelName3.htmlFor = "radio3";
-  radioLabelName3.textContent = "+ de 5 anos";
-
-  //adcionar no formulário as opções e quebras de linha
-
-  devForm.appendChild(radioLabel1);
-  makeBreakLine(devForm);
-  devForm.appendChild(radioInput1);
-  devForm.appendChild(radioLabelName1);
-
-  makeBreakLine(devForm);
-  devForm.appendChild(radioInput2);
-  devForm.appendChild(radioLabelName2);
-
-  makeBreakLine(devForm);
-  devForm.appendChild(radioInput3);
-  devForm.appendChild(radioLabelName3);
-
+function createRowBreak() {
+  return (breakRow = document.createElement("br"));
+}
+//capturando o botão
+const addTechBtn = document.getElementById("addTechBtn");
+//capturando o formulário
+const form = document.getElementById("devForm");
+//quantidade de desenvolvedores
+const developers = [];
+//linhas de input
+let inputRows = 0;
+//quando o botão add tech for clicado dispara o evento...
+addTechBtn.addEventListener("click", () => {
+  //criando quebra de linha
+  createRowBreak();
+  //tecnologias
+  const stackInputs = document.getElementById("stackInputs");
+  const newRows = document.createElement("li");
+  const rowIndex = inputRows;
+  inputRows++;
+  //concatenar linhas para diferencialas uma das outras
+  newRows.id = "inputRow-" + rowIndex;
+  newRows.className = "inputRow";
+  //criando a label e o input
+  const techNameLabel = createLabel("nome: ", "techName-" + rowIndex);
+  const techNameInput = createInput("techName-" + rowIndex, null, "techName");
+  //experiência
+  const expLabel = createLabel("experiência: ");
+  //criando input radio
+  const id1 = "expRadio-" + rowIndex + ".1";
+  const expRadio1 = createInput(
+    id1,
+    "0-2 anos",
+    "techExp-" + rowIndex,
+    "radio"
+  );
+  const expLabel1 = createLabel("0-2 anos", id1);
+  const id2 = "expRadio-" + rowIndex + ".2";
+  const expRadio2 = createInput(
+    id2,
+    "3-4 anos",
+    "techExp-" + rowIndex,
+    "radio"
+  );
+  const expLabel2 = createLabel("3-4 anos", id2);
+  const id3 = "expRadio-" + rowIndex + ".3";
+  const expRadio3 = createInput(id3, "5+ anos", "techExp-" + rowIndex, "radio");
+  const expLabel3 = createLabel("5+ anos", id3);
   //botão de remover
-
-  const removeBttn = document.createElement("button");
-  removeBttn.id = "removeButtonId";
-  removeBttn.textContent = "remover tecnologia";
-  //adcionar botão de remover no formulário
-
-  makeBreakLine(devForm);
-  makeBreakLine(devForm);
-  devForm.appendChild(removeBttn);
-  console.log(devForm);
-
-  return devForm;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  //função para remover o último item adcionado
-  function removeButton() {
-    if (devForms.length > 0) {
-      const lastForm = devForms.pop();
-      lastForm.remove();
-    }
-  }
-
-  //função para cadastrar a tecnologia
-  function registerTech() {}
-
-  //mapeando botão
-  const buttonCreate = document.getElementById("bttnId");
-  //disparando a função que cria o formulário ao clicar no botão
-  buttonCreate.addEventListener("click", createFormDev);
-
-  //removendo o botão se clicado
-  const buttonRemove = document.getElementById("removeButtonId");
-  buttonRemove.addEventListener("click", removeButton);
+  const removeButton = document.createElement("button");
+  removeButton.type = "button";
+  removeButton.innerText = "remover";
+  removeButton.addEventListener("click", () => {
+    stackInputs.removeChild(newRows);
+  });
+  //li - acrescentar nós filhos -linha
+  stackInputs.appendChild(createRowBreak());
+  newRows.append(techNameLabel, techNameInput);
+  newRows.append(createRowBreak());
+  newRows.append(
+    expLabel,
+    expRadio1,
+    expLabel1,
+    expRadio2,
+    expLabel2,
+    expRadio3,
+    expLabel3
+  );
+  newRows.append(createRowBreak(), createRowBreak(), removeButton);
+  //ul - acrescentar nós filhos -lista
+  stackInputs.appendChild(newRows);
 });
 
-//variável do formulário
-let devForms = [];
-let main = createFormDev();
+form.addEventListener("submit", (event) => {
+  //impedir que a página recarregue
+  event.preventDefault();
+  //pegando os valores e salvando em uma const
+  const fullnameInput = document.getElementById("fullname");
+  const inputRows = document.querySelectorAll(".inputRow");
+  //tecnologias
+  let technologies = [];
+  //para cada input
+  inputRows.forEach((row) => {
+    //#rowId -> input[name= "TechName"]
+    const techName = document.querySelector(
+      "#" + row.id + ' input[name = "techName"]'
+    ).value;
+
+    const techExp = document.querySelector(
+      "#" + row.id + ' input[type="radio"]:checked'
+    ).value;
+    //construindo um objeto com as informações de cada linha do formulário
+    technologies.push({ name: techName, exp: techExp });
+  });
+  //novo desenvolvedor
+  const newDev = { fullname: fullnameInput.value, technologies: technologies };
+  developers.push(newDev);
+  alert("dev cadastrado com sucesso!");
+  //limpar elementos
+  fullnameInput.value = "";
+  inputRows.forEach((row) => {
+    row.remove();
+  });
+  console.log(developers);
+});

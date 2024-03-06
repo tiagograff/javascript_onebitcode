@@ -7,13 +7,17 @@
   </head>
   <body style="background-color: whitesmoke">
     <h1>cadastro de devs:</h1>
-    <label for="inputNameDev">nome completo: </label>
-    <br />
-    <input name="inputNameDev" id="inputNameDev" type="text" />
-    <br /><br />
-    <button id="bttnId">adicionar nova tecnologia</button>
     <hr />
-    <main id="mainId"></main>
+    <form id="devForm">
+      <label for="fullname">nome completo: </label>
+      <input type="text" name="fullname" id="fullname" />
+      <br /><br />
+      <label>tecnologias:</label>
+      <button type="button" id="addTechBtn">adcionar nova</button>
+      <ul id="stackInputs"></ul>
+      <br />
+      <button type="submit">cadastrar</button>
+    </form>
     <script src="./main.js"></script>
   </body>
 </html>
